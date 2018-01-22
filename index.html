@@ -6,13 +6,32 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section id="title" data-background-image="img/Zhenjun-The-Tower-Of-Babel-The-Flood-2010.jpg">
+					Slide 1
+				</section>
+				<section>
+					<section>Slide 2</section>
+					<section>Slide 3</section>
+					<section>Slide 4</section>
+					<section>Slide 5</section>
+					<section>Slide 6</section>
+				</section>
 			</div>
 		</div>
 		<script src="reveal.js/js/reveal.js"></script>
 		<script>
-			Reveal.initialize();
+			Reveal.initialize({
+				parallaxBackgroundImage: "img/Zhenjun-The-Tower-Of-Babel-The-Flood-2010.jpg",
+				parallaxBackgroundSize: "1701px 2268px",
+				parallaxBackgroundHorizontal: 0,
+				transition: 'slide',
+				transitionSpeed: 'slow'
+			});
+			Reveal.addEventListener( 'slidechanged', function( event ) {
+				if ( event.previousSlide.id == 'title' ) {
+					Reveal.slide( 1, 100 ) // move bottom
+				}
+			} );
 		</script>
 	</body>
 </html>
