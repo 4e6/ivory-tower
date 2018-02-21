@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# requirements:
+# * coreutils - seq
+# * texlive   - pdflatex
+# * poppler   - pdfinfo
+# * pdf2svg   - pdf2svg
+
+set -e
+
+verbose() {
+  (set -x; $@)
+}
+
+build() {
+  verbose pdflatex -halt-on-error graph.tex
+
+  local numpages=$(pdfinfo graph.pdf | grep Pages | awk '{print $2}')
+
+  for n in $(seq 1 $numpages); do
+    verbose pdf2svg graph.pdf graph-$n.svg $n
+  done
+}
+
+clean() {
+  verbose rm graph.aux graph.log graph.pdf
+}
+
+watch() {
+  inotifywait -m -e close_write -e moved_to . |
+    while read path _ file; do
+      if [ $file = 'graph.tex' ]; then
+        build
+        clean
+      fi
+    done
+}
+
+if [ $1 = '-' ]; then
+  watch
+else
+  build
+  clean
+fi

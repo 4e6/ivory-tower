@@ -1,40 +1,235 @@
 <html>
-	<head>
-		<link rel="stylesheet" href="reveal.js/css/reveal.css">
-		<link rel="stylesheet" href="reveal.js/css/theme/black.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section id="title" data-background-image="img/Zhenjun-The-Tower-Of-Babel-The-Flood-2010.jpg">
-					<h1>The Ivory Tower</h1>
-				</section>
-				<section>
-					<section>Slide 2</section>
-					<section>Slide 3</section>
-					<section>Slide 4</section>
-					<section>Slide 5</section>
-					<section></section>
-				</section>
-			</div>
-		</div>
-		<script src="reveal.js/js/reveal.js"></script>
-		<script>
-			Reveal.initialize({
-				controlsTutorial: false,
-				controlsBackArrows: 'visible',
-				progress: false,
-				parallaxBackgroundImage: "img/Zhenjun-The-Tower-Of-Babel-The-Flood-2010.jpg",
-				parallaxBackgroundSize: "1707px 2268px",
-				parallaxBackgroundHorizontal: 0,
-				transition: 'slide',
-				transitionSpeed: 'slow'
-			});
-			Reveal.addEventListener( 'slidechanged', function( event ) {
-				if ( event.previousSlide.id === 'title' ) {
-					Reveal.slide( 1, 100 ) // move bottom
-				}
-			} );
-		</script>
-	</body>
+  <head>
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="reveal.js/css/theme/night.css">
+    <link rel="stylesheet" href="css/custom.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section id="title" data-background-image="img/Zhenjun-The-Tower-Of-Babel-The-Flood-2010.jpg">
+          <h1>The Ivory Tower</h1>
+        </section>
+        <section id="outline" data-background-image="img/Zhenjun-The-Tower-Of-Babel-The-Flood-2010.jpg">
+          <div class="readable">
+            <h3>Outline</h3>
+            <ul>
+              <li>What</li>
+              <li>How</li>
+              <li>Why</li>
+            </ul>
+          </div>
+        </section>
+        <section>
+          <section></section>
+          <section></section>
+          <section></section>
+          <section></section>
+          <section></section>
+          <section></section>
+          <section></section>
+          <section></section>
+          <section></section>
+          <section data-background-image="img/bosch.jpg">
+            <h3>Communication</h3>
+            <p class="fragment"><img src="img/static-dynamic-typing-venn.png" class="clear"></p>
+          </section>
+          <section>
+            <h3>Communication</h3>
+          </section>
+          <section>
+            <h3>Process</h3>
+            <div class="readable">
+              <ul>
+                <li>Code/self review</li>
+                <li>Checklists</li>
+                <li>Linting</li>
+                <li>Documentation</li>
+                <li>Comments</li>
+                <li>Code metrics</li>
+                <li>&#8230;</li>
+              </ul>
+            </div>
+          </section>
+          <section>
+            <blockquote class="wide">
+              <p>“... switching your language is incredibly expensive for a <span class="emphasis">marginal benefit</span>. Most of the biggest wins in correctness come from <span class="emphasis">process</span>” <br> &#8213; Hillel Wayne @Hillelogram</p>
+            </blockquote>
+          </section>
+
+          <section><h3>Why</h3></section>
+
+          <section>
+            <h3><s>Dynamic</s> Single type</h3>
+            <p><img src="diagram/graph-16.svg" class="clear"></p>
+          </section>
+          <section>
+            <blockquote class="wide">
+              <p>“A dynamic language is a straightjacketed static language that affords <span class="emphasis">less</span> rather than more <span class="emphasis">expressiveness</span>” &#8213; Robert Harper</p>
+            </blockquote>
+          </section>
+          <section>
+            <h3>Dynamic</h3>
+            <p><img src="diagram/graph-16.svg" class="clear"></p>
+          </section>
+          <section>
+            <h3>Static</h3>
+            <p><img src="diagram/graph-15.svg" class="clear"></p>
+          </section>
+          <section>
+            <blockquote class="wide">
+              <p>“Rejecting incorrect programs is a minor reason for why we need types. Types are first and foremost <span class="emphasis">a design language</span>. We use types to signal intent to other developers and document our code all while having the compiler check that that documentation is still valid”
+              <br> &#8213; Christoph Hegemann @kritzcreek</p>
+            </blockquote>
+          </section>
+          <section>
+            <h3>Static</h3>
+            <p><img src="diagram/graph-15.svg" class="clear"></p>
+          </section>
+          <section>
+            <h3>Type (<span class="emphasis">shape</span>)</h3>
+            <p><img src="img/medical_pipes.jpg" class="clear"></p>
+          </section>
+          <section>
+            <h3>Data + State + Effects</h3>
+            <p><img src="diagram/graph-14.svg" class="clear"></p>
+          </section>
+          <!--<section><p><img src="diagram/graph-13.svg" class="clear"></p></section>-->
+          <section>
+            <h3>Effects</h3>
+            <p><img src="diagram/graph-12.svg" class="clear"></p>
+          </section>
+          <section>
+            <h3>Effects</h3>
+            <p><img src="diagram/graph-11.svg" class="clear"></p>
+          </section>
+          <section>
+            <h3>State</h3>
+            <p><img src="diagram/graph-10.svg" class="clear"></p>
+          </section>
+          <section>
+            <p><img src="img/oop_claim.png" class="clear"></p>
+          </section>
+          <section>
+            <h3>State</h3>
+            <p><img src="diagram/graph-9.svg" class="clear"></p>
+          </section>
+          <section>
+            <h3>Data</h3>
+            <p><img src="diagram/graph-6.svg" class="clear"></p>
+          </section>
+
+          <section><h3>How</h3></section>
+
+          <section>
+            <blockquote>
+              <p>“People think that computer science is the art of geniuses but the actual reality is the opposite, just many people doing <span class="emphasis">things that build on each other</span>, like a wall of mini stones.” &#8213; Donald Knuth</p>
+            </blockquote>
+          </section>
+          <section>
+            <h3>A new <span class="emphasis">abstraction</span></h3>
+            <!--another person's abstraction-->
+            <p><img src="diagram/graph-6.svg" class="clear"></p>
+          </section>
+          <section data-markdown>
+            <textarea data-template>
+              ### A program
+
+              ![obj](diagram/graph-5.svg) <!-- .element: class="clear" -->
+            </textarea>
+          </section>
+          <!--<section data-markdown>-->
+            <!--<textarea data-template>-->
+              <!--### hidden 7 [> .element: style="visibility:hidden"  <]-->
+
+              <!--![obj](diagram/graph-4.svg) [> .element: class="clear" <]-->
+            <!--</textarea>-->
+          <!--</section>-->
+          <!--<section data-markdown>-->
+            <!--<textarea data-template>-->
+              <!--### hidden [> .element: style="visibility:hidden"  <]-->
+
+              <!--![obj](diagram/graph-3.svg) [> .element: class="clear" <]-->
+            <!--</textarea>-->
+          <!--</section>-->
+          <!--<section data-markdown>-->
+            <!--<textarea data-template>-->
+              <!--### hidden [> .element: style="visibility:hidden"  <]-->
+
+              <!--![obj](diagram/graph-2.svg) [> .element: class="clear" <]-->
+            <!--</textarea>-->
+          <!--</section>-->
+
+          <section data-markdown>
+            <textarea data-template>
+              ### Abstraction
+
+              ![obj](diagram/graph-1.svg) <!-- .element: class="clear" -->
+            </textarea>
+          </section>
+          <section>
+            <blockquote>
+              <p>“The purpose of <span class="emphasis">abstraction</span> is not to be vague, but to create a new semantic level in which one can be absolutely precise.” &#8213; Edsger W. Dijkstra</p>
+            </blockquote>
+          </section>
+          <!--<section data-markdown>-->
+            <!--<textarea data-template>-->
+              <!--### Abstraction-->
+
+              <!--[> ## instruction <]-->
+
+              <!--![obj](diagram/graph-1.svg) [> .element: class="clear" <]-->
+            <!--</textarea>-->
+          <!--</section>-->
+          <!--<section>-->
+            <!--<h3>Programs are about<span class="emphasis">abstractions</span></h3>-->
+          <!--</section>-->
+          <!--<section>-->
+            <!--<h3>How to write a <span class="emphasis">program</span>?</h3>-->
+          <!--</section>-->
+          <section>
+            <h3>A <span class="emphasis">program</span></h3>
+          </section>
+          <section id="what"><h3>What</h3></section>
+        </section>
+
+        <section data-background-image="img/Zhenjun-The-Tower-Of-Babel-The-Flood-2010.jpg">
+          <p class="fragment"><img src="img/javascript_memes.jpg" class="clear" style="height: 90%;"></p>
+        </section>
+        <section data-background-image="img/Zhenjun-The-Tower-Of-Babel-The-Flood-2010.jpg">
+          <h3>Being kind to others</h3>
+        </section>
+        <section data-background-image="img/my-little-pony-castle.jpg">
+          <h3>The end</h3>
+        </section>
+      </div>
+    </div>
+    <script src="reveal.js/js/reveal.js"></script>
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script>
+      Reveal.initialize({
+        controlsTutorial: false,
+        controlsBackArrows: 'visible',
+        progress: false,
+        dtu: true,
+        parallaxBackgroundImage: "img/Zhenjun-The-Tower-Of-Babel-The-Flood-2010.jpg",
+        parallaxBackgroundSize: "1707px 2268px",
+        parallaxBackgroundHorizontal: 0,
+        transition: 'fade',
+        transitionSpeed: 'slow',
+        keyboard: {
+          71: function() { Reveal.slide( 1, 100 ); }
+        },
+        dependencies: [
+          { src: 'reveal.js/plugin/markdown/marked.js' },
+          { src: 'reveal.js/plugin/markdown/markdown.js' }
+        ]
+      });
+      Reveal.addEventListener( 'slidechanged', function( event ) {
+        if ( event.previousSlide.id === 'outline' && event.currentSlide.id !== 'title' ) {
+          Reveal.slide( 2, 99 ); // move to bottom
+        }
+      } );
+    </script>
+  </body>
 </html>

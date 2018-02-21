@@ -1,0 +1,26 @@
+.reveal section img.clear {
+  border: 0;
+  box-shadow: none;
+  background: none; }
+
+.reveal .emphasis {
+  color: yellow; }
+
+.reveal blockquote {
+  font-family: serif;
+  background: rgba(0, 0, 0, 0.5); }
+
+.reveal .readable {
+  background: rgba(0, 0, 0, 0.5); }
+
+.reveal .wide {
+  width: 100%;
+}
+
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  background: rgba(0, 0, 0, 0.3); }
+

@@ -1,0 +1,908 @@
+% A simple graph
+\documentclass[a4paper,landscape]{article}
+\usepackage{verbatim}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,backgrounds,calc,decorations.markings,decorations.pathreplacing,fit,shapes}
+%%%<
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{10pt}
+%%%>
+
+% tikzpicture centered
+\newenvironment{tikzfigure}
+{ \begin{figure}[!h]\centering\begin{tikzpicture} }
+{ \end{tikzpicture}\end{figure} }
+
+\begin{document}
+
+%% https://tex.stackexchange.com/questions/55068
+\tikzset{
+  ncbar angle/.initial=90,
+  ncbar/.style={
+    to path=(\tikztostart)
+    -- ($(\tikztostart)!#1!\pgfkeysvalueof{/tikz/ncbar angle}:(\tikztotarget)$)
+    -- ($(\tikztotarget)!($(\tikztostart)!#1!\pgfkeysvalueof{/tikz/ncbar angle}:(\tikztotarget)$)!\pgfkeysvalueof{/tikz/ncbar angle}:(\tikztostart)$)
+    -- (\tikztotarget)
+  },
+  ncbar/.default=0.5cm,
+}
+
+\tikzset{square left brace/.style={ncbar=0.25cm}}
+\tikzset{square right brace/.style={ncbar=-0.25cm}}
+\tikzset{round left paren/.style={ncbar=0.5cm,out=120,in=-120}}
+\tikzset{round right paren/.style={ncbar=0.5cm,out=60,in=-60}}
+
+% effectarrow/.style={line width=12pt,draw=purple,shorten >= 5pt,shorten <= 5pt,-{Triangle Cap []. Fast Triangle[] Fast Triangle[]}},
+
+\tikzset{
+  circlenode/.style={circle, line width=2.5pt, draw=orange, fill=orange!60, minimum size=28pt},
+  squarenode/.style={rectangle, line width=2.5pt, draw=orange, fill=orange!60, minimum size=28pt},
+  globalnode/.style={circle, draw=purple, ultra thick, fill=red!80, minimum size=28pt},
+  effnode/.style={circle, draw=violet, ultra thick, fill=violet!60, minimum size=28pt},
+  effmod/.style={circle, dotted, draw=purple, ultra thick, minimum size=28pt},
+  funbox/.style={draw, line width=3pt, inner sep=1em},
+  %nodeconn/.style={->,>=latex,line width=3pt,draw=lime},
+  nodeconn/.style={line width=3pt,draw=lime},
+  implicitconn/.style={->,>=latex,line width=3pt,draw=purple,loosely dotted},
+  %effectarrow/.style={line width=8pt,draw=purple,shorten >= 5pt,shorten <= 15pt,arrows = -{Stealth[inset=0pt, length=12pt, angle'=90]. }},
+  effectarrow/.style={draw opacity=0,line width=18pt,draw=purple,shorten >= 10pt,arrows = -{Fast Triangle[] Fast Triangle[] Fast Triangle[]}},
+  aboveLabel/.style={above=18pt},
+}
+
+%% a node
+\begin{tikzpicture}
+  \node[circlenode] (a1) at (3,9) {};
+\end{tikzpicture}
+
+%% two nodes
+\begin{tikzpicture}
+  \node[circlenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+\end{tikzpicture}
+
+%% two nodes connected
+\begin{tikzpicture}
+  \node[circlenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+
+  \draw[nodeconn] (a1) -- (a2);
+\end{tikzpicture}
+
+%% 7 nodes connected
+\begin{tikzpicture}
+  \node[circlenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+  %\node[circlenode] (a3) at (1.5,9) {};
+  \node[circlenode] (a4) at (5.5,6.5) {};
+  \node[circlenode] (a5) at (1.5,5.5) {};
+  \node[circlenode] (a7) at (4,4) {};
+
+  \draw[nodeconn] (a1) -- (a2);
+
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  %\draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a7);
+
+  \draw[nodeconn] (a5) -- (a7);
+\end{tikzpicture}
+
+%% 11 nodes connected
+\begin{tikzpicture}
+
+  \node[circlenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+  %\node[circlenode] (a3) at (1.5,9) {};
+  \node[circlenode] (a4) at (5.5,6.5) {};
+  \node[circlenode] (a5) at (1.5,5.5) {};
+  \node[circlenode] (a6) at (7,5) {};
+  \node[circlenode] (a7) at (4,4) {};
+  \node[circlenode] (a8) at (2,2.5) {};
+  \node[circlenode] (a9) at (8.5,3.5) {};
+  \node[circlenode] (a11) at (5,0.5) {};
+
+  \draw[nodeconn] (a1) -- (a2);
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  %\draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a11);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  \draw[nodeconn] (a6) -- (a9);
+
+  \draw[nodeconn] (a7) -- (a11);
+  \draw[nodeconn] (a7) -- (a8);
+
+  %\draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+
+  \draw[nodeconn] (a9) -- (a11);
+\end{tikzpicture}
+
+%% 11 nodes connected framed -- graph-6.tex
+\begin{tikzpicture}
+
+  \node[circlenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+  %\node[circlenode] (a3) at (1.5,9) {};
+  \node[circlenode] (a4) at (5.5,6.5) {};
+  \node[circlenode] (a5) at (1.5,5.5) {};
+  \node[circlenode] (a6) at (7,5) {};
+  \node[circlenode] (a7) at (4,4) {};
+  \node[circlenode] (a8) at (2,2.5) {};
+  \node[circlenode] (a9) at (8.5,3.5) {};
+  \node[circlenode] (a11) at (5,0.5) {};
+
+  \draw[nodeconn] (a1) -- (a2);
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  %\draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a11);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  \draw[nodeconn] (a6) -- (a9);
+
+  \draw[nodeconn] (a7) -- (a11);
+  \draw[nodeconn] (a7) -- (a8);
+
+  %\draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+
+  \draw[nodeconn] (a9) -- (a11);
+
+  \begin{scope}[on background layer]
+    \node[funbox,fit=(a2) (a5) (a8) (a9)] {};
+  \end{scope}
+\end{tikzpicture}
+
+%% 11 nodes connected framed filled -- diagram-7.svg
+\begin{tikzpicture}
+
+  \node[circlenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+  %\node[circlenode] (a3) at (1.5,9) {};
+  \node[circlenode] (a4) at (5.5,6.5) {};
+  \node[circlenode] (a5) at (1.5,5.5) {};
+  \node[circlenode] (a6) at (7,5) {};
+  \node[circlenode] (a7) at (4,4) {};
+  \node[circlenode] (a8) at (2,2.5) {};
+  \node[circlenode] (a9) at (8.5,3.5) {};
+  \node[circlenode] (a11) at (5,0.5) {};
+
+  \draw[nodeconn] (a1) -- (a2);
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  %\draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a11);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  \draw[nodeconn] (a6) -- (a9);
+
+  \draw[nodeconn] (a7) -- (a11);
+  \draw[nodeconn] (a7) -- (a8);
+
+  %\draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+
+  \draw[nodeconn] (a9) -- (a11);
+
+  \definecolor{skygray}{RGB}{124,135,143}
+  \node[fill=skygray,funbox,fit=(a2) (a5) (a8) (a9)] {};
+\end{tikzpicture}
+
+%% 11 nodes connected framed typed -- graph-8.tex
+\begin{tikzpicture}
+
+  \node[squarenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+  %\node[circlenode] (a3) at (1.5,9) {};
+  \node[circlenode] (a4) at (5.5,6.5) {};
+  \node[circlenode] (a5) at (1.5,5.5) {};
+  \node[circlenode] (a6) at (7,5) {};
+  \node[circlenode] (a7) at (4,4) {};
+  \node[circlenode] (a8) at (2,2.5) {};
+  \node[circlenode] (a9) at (8.5,3.5) {};
+  \node[squarenode] (a11) at (5,0.5) {};
+
+  \draw[nodeconn] (a1) -- (a2);
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  %\draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a11);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  \draw[nodeconn] (a6) -- (a9);
+
+  \draw[nodeconn] (a7) -- (a11);
+  \draw[nodeconn] (a7) -- (a8);
+
+  %\draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+
+  \draw[nodeconn] (a9) -- (a11);
+
+  \begin{scope}[on background layer]
+    \node[funbox,fit=(a2) (a5) (a8) (a9)] {};
+  \end{scope}
+\end{tikzpicture}
+
+%% 11 nodes connected framed typed state on the side -- graph-9.tex
+\begin{tikzpicture}
+
+  \node[circlenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+  %\node[circlenode] (a3) at (1.5,9) {};
+  \node[circlenode] (a4) at (5.5,6.5) {};
+  \node[circlenode] (a5) at (1.5,5.5) {};
+  \node[circlenode] (a6) at (7,5) {};
+  \node[circlenode] (a7) at (4,4) {};
+  \node[circlenode] (a8) at (2,2.5) {};
+  \node[circlenode] (a9) at (8.5,3.5) {};
+  \node[circlenode] (a11) at (5,0.5) {};
+
+  \draw[nodeconn] (a1) -- (a2);
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  %\draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a11);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  \draw[nodeconn] (a6) -- (a9);
+
+  \draw[nodeconn] (a7) -- (a11);
+  \draw[nodeconn] (a7) -- (a8);
+
+  %\draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+
+  \draw[nodeconn] (a9) -- (a11);
+
+  \begin{scope}[on background layer]
+    \node[funbox,fit=(a2) (a5) (a8) (a9)] {};
+  \end{scope}
+
+  % state args
+  \draw (11.5,6.5) node[globalnode] (state) {};
+  \draw (11.5,5) node[globalnode] (log) {};
+  \draw (11.5,3.5) node[globalnode] (db) {};
+
+  \draw[nodeconn] (state) -- (a4);
+  \draw[nodeconn] (log)  -- (a6);
+  \draw[nodeconn] (db) -- (a9);
+\end{tikzpicture}
+
+%% 11 nodes connected framed typed state in interface -- graph-10.tex
+\begin{tikzpicture}
+
+  \node[circlenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+  %\node[circlenode] (a3) at (1.5,9) {};
+  \node[circlenode] (a4) at (5.5,6.5) {};
+  \node[circlenode] (a5) at (1.5,5.5) {};
+  \node[circlenode] (a6) at (7,5) {};
+  \node[circlenode] (a7) at (4,4) {};
+  \node[circlenode] (a8) at (2,2.5) {};
+  \node[circlenode] (a9) at (8.5,3.5) {};
+  \node[circlenode] (a11) at (5,0.5) {};
+
+  \draw[nodeconn] (a1) -- (a2);
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  %\draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a11);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  \draw[nodeconn] (a6) -- (a9);
+
+  \draw[nodeconn] (a7) -- (a11);
+  \draw[nodeconn] (a7) -- (a8);
+
+  %\draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+
+  \draw[nodeconn] (a9) -- (a11);
+
+  \begin{scope}[on background layer]
+    \node[funbox,fit=(a2) (a5) (a8) (a9)] {};
+  \end{scope}
+
+  % state args
+  \draw (5.5,9) node[globalnode] (state) {};
+  \draw (7,9) node[globalnode] (log) {};
+  \draw (8.5,9) node[globalnode] (db) {};
+
+  \draw[nodeconn] (state) -- (a4);
+  \draw[nodeconn] (log)  -- (a6);
+  \draw[nodeconn] (db) -- (a9);
+
+\end{tikzpicture}
+
+%% 11 nodes connected framed typed state in interface side effects -- graph-11.tex
+\begin{tikzpicture}
+
+  \node[circlenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+  %\node[circlenode] (a3) at (1.5,9) {};
+  \node[circlenode] (a4) at (5.5,6.5) {};
+  \node[circlenode] (a5) at (1.5,5.5) {};
+  \node[circlenode] (a6) at (7,5) {};
+  \node[circlenode] (a7) at (4,4) {};
+  \node[circlenode] (a8) at (2,2.5) {};
+  \node[circlenode] (a9) at (8.5,3.5) {};
+  \node[circlenode] (a11) at (5,0.5) {};
+
+  \draw[nodeconn] (a1) -- (a2);
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  %\draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a11);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  \draw[nodeconn] (a6) -- (a9);
+
+  \draw[nodeconn] (a7) -- (a11);
+  \draw[nodeconn] (a7) -- (a8);
+
+  %\draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+
+  \draw[nodeconn] (a9) -- (a11);
+
+  \begin{scope}[on background layer]
+    \node[funbox,fit=(a2) (a5) (a8) (a9)] {};
+  \end{scope}
+
+  % state args
+  \draw (5.5,9) node[globalnode] (state) {};
+  \draw (7,9) node[globalnode] (log) {};
+  \draw (8.5,9) node[globalnode] (db) {};
+
+  \draw[nodeconn] (state) -- (a4);
+  \draw[nodeconn] (log)  -- (a6);
+  \draw[nodeconn] (db) -- (a9);
+
+  % eff nodes
+  \draw
+    (13,6.5) node[effnode] (steff) {}
+    (13,5) node[effnode] (logeff) {}
+    (13,3.5) node[effnode] (dbeff) {};
+
+  \draw[effectarrow] (a4) -- (steff);
+  \draw[effectarrow] (a6) -- (logeff);
+  \draw[effectarrow] (a9) -- (dbeff);
+\end{tikzpicture}
+
+%% 11 nodes connected framed typed state in interface effects in interface -- graph-12.tex
+\begin{tikzpicture}
+
+  \node[circlenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+  %\node[circlenode] (a3) at (1.5,9) {};
+  \node[circlenode] (a4) at (5.5,6.5) {};
+  \node[circlenode] (a5) at (1.5,5.5) {};
+  \node[circlenode] (a6) at (7,5) {};
+  \node[circlenode] (a7) at (4,4) {};
+  \node[circlenode] (a8) at (2,2.5) {};
+  \node[circlenode] (a9) at (8.5,3.5) {};
+  \node[circlenode] (a11) at (5,0.5) {};
+
+  \draw[nodeconn] (a1) -- (a2);
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  %\draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a11);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  \draw[nodeconn] (a6) -- (a9);
+
+  \draw[nodeconn] (a7) -- (a11);
+  \draw[nodeconn] (a7) -- (a8);
+
+  %\draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+
+  \draw[nodeconn] (a9) -- (a11);
+
+  \begin{scope}[on background layer]
+    \node[funbox,fit=(a2) (a5) (a8) (a9)] {};
+  \end{scope}
+
+  % state args
+  \draw (5.5,9) node[globalnode] (state) {};
+  \draw (7,9) node[globalnode] (log) {};
+  \draw (8.5,9) node[globalnode] (db) {};
+
+  \draw[nodeconn] (state) -- (a4);
+  \draw[nodeconn] (log)  -- (a6);
+  \draw[nodeconn] (db) -- (a9);
+
+  % eff args
+  \draw (10.5,9) node[effnode] (effargst) {};
+  \draw (12,9) node[effnode] (effarglog) {};
+  \draw (13.5,9) node[effnode] (effargdb) {};
+
+\end{tikzpicture}
+
+%% 11 nodes connected framed typed state in interface effects in interface with braces -- graph-13.tex
+\begin{tikzpicture}
+
+  \node[circlenode] (a1) at (3,9) {};
+  \node[circlenode] (a2) at (3,7) {};
+  %\node[circlenode] (a3) at (1.5,9) {};
+  \node[circlenode] (a4) at (5.5,6.5) {};
+  \node[circlenode] (a5) at (1.5,5.5) {};
+  \node[circlenode] (a6) at (7,5) {};
+  \node[circlenode] (a7) at (4,4) {};
+  \node[circlenode] (a8) at (2,2.5) {};
+  \node[circlenode] (a9) at (8.5,3.5) {};
+  \node[circlenode] (a11) at (5,0.5) {};
+
+  \draw[nodeconn] (a1) -- (a2);
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  %\draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a11);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  \draw[nodeconn] (a6) -- (a9);
+
+  \draw[nodeconn] (a7) -- (a11);
+  \draw[nodeconn] (a7) -- (a8);
+
+  %\draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+
+  \draw[nodeconn] (a9) -- (a11);
+
+  \begin{scope}[on background layer]
+    \node[funbox,fit=(a2) (a5) (a8) (a9)] {};
+  \end{scope}
+
+  % state args
+  \draw (5.5,9) node[globalnode] (state) {};
+  \draw (7,9) node[globalnode] (log) {};
+  \draw (8.5,9) node[globalnode] (db) {};
+
+  \draw[nodeconn] (state) -- (a4);
+  \draw[nodeconn] (log)  -- (a6);
+  \draw[nodeconn] (db) -- (a9);
+
+  % eff args
+  \draw (11,9) node[effnode] (effargst) {};
+  \draw (12.5,9) node[effnode] (effarglog) {};
+  \draw (14,9) node[effnode] (effargdb) {};
+
+  % args parens
+  \draw [line width=3pt] (a1) +(-24pt,-0.5) to [round left paren] +(-24pt,0.5);
+  \draw [line width=3pt] (a1) +(24pt,-0.5) to [round right paren] +(24pt,0.5);
+
+  \draw[line width=3pt,decorate,decoration={brace,amplitude=5pt}] (state) +(-24pt,-0.5) -- +(-24pt,0.5);
+  \draw[line width=3pt,decorate,decoration={brace,amplitude=5pt,mirror}] (db) +(24pt,-0.5) -- +(24pt,0.5);
+
+  \draw [line width=3pt] (effargst) +(-20pt,-0.5) to [square left brace] +(-20pt,0.5);
+  \draw [line width=3pt] (effargdb) +(20pt,-0.5) to [square right brace] +(20pt,0.5);
+\end{tikzpicture}
+
+%% just args with braces -- graph-14.tex
+\begin{tikzpicture}
+
+  \node[circlenode] (a1) at (3,9) {};
+
+  % state args
+  \draw (5.5,9) node[globalnode] (state) {};
+  \draw (7,9) node[globalnode] (log) {};
+  \draw (8.5,9) node[globalnode] (db) {};
+
+  % eff args
+  \draw (11,9) node[effnode] (effargst) {};
+  \draw (12.5,9) node[effnode] (effarglog) {};
+  %\draw (14,9) node[effnode] (effargdb) {};
+
+  % args parens
+  \draw [line width=3pt] (a1) +(-24pt,-0.5) to [round left paren] +(-24pt,0.5);
+  \draw [line width=3pt] (a1) +(24pt,-0.5) to [round right paren] +(24pt,0.5);
+
+  \draw[line width=3pt,decorate,decoration={brace,amplitude=5pt}] (state) +(-24pt,-0.5) -- +(-24pt,0.5);
+  \draw[line width=3pt,decorate,decoration={brace,amplitude=5pt,mirror}] (db) +(24pt,-0.5) -- +(24pt,0.5);
+
+  \draw [line width=3pt] (effargst) +(-20pt,-0.5) to [square left brace] +(-20pt,0.5);
+  \draw [line width=3pt] (effarglog) +(20pt,-0.5) to [square right brace] +(20pt,0.5);
+\end{tikzpicture}
+
+%% just args with braces static -- graph-15.tex
+\begin{tikzpicture}
+
+  \node[circlenode,shape=star] (a0) at (1.5,9) {};
+  \node[circlenode] (a1) at (3,9) {};
+
+  % state args
+  \draw (5.5,9) node[globalnode,shape=cloud] (state) {};
+  \draw (7,9) node[globalnode,shape=regular polygon] (log) {};
+  \draw (8.5,9) node[globalnode,shape=rectangle] (db) {};
+
+  % eff args
+  \draw (11,9) node[effnode,shape=starburst] (effargst) {};
+  \draw (12.5,9) node[effnode,isosceles triangle, isosceles triangle apex angle=60,minimum size=22] (effarglog) {};
+
+  % args parens
+  \draw [line width=3pt] (a0) +(-24pt,-0.5) to [round left paren] +(-24pt,0.5);
+  \draw [line width=3pt] (a1) +(24pt,-0.5) to [round right paren] +(24pt,0.5);
+
+  \draw[line width=3pt,decorate,decoration={brace,amplitude=5pt}] (state) +(-24pt,-0.5) -- +(-24pt,0.5);
+  \draw[line width=3pt,decorate,decoration={brace,amplitude=5pt,mirror}] (db) +(24pt,-0.5) -- +(24pt,0.5);
+
+  \draw [line width=3pt] (effargst) +(-20pt,-0.5) to [square left brace] +(-20pt,0.5);
+  \draw [line width=3pt] (effarglog) +(20pt,-0.5) to [square right brace] +(20pt,0.5);
+\end{tikzpicture}
+
+%% just args with braces dynamic -- graph-16.tex
+\begin{tikzpicture}
+
+  %\node[circlenode] (a1) at (3,9) {};
+
+  % state args
+  \draw (5.5,9) node[globalnode] (state) {};
+  \draw (7,9) node[globalnode] (log) {};
+  \draw (8.5,9) node[globalnode] (db) {};
+
+  % eff args
+  \draw (11,9) node[effnode] (effargst) {};
+  %\draw (12.5,9) node[effnode] (effarglog) {};
+  %\draw (14,9) node[effnode] (effargdb) {};
+
+  % args parens
+  %\draw [line width=3pt] (a1) +(-24pt,-0.5) to [round left paren] +(-24pt,0.5);
+  %\draw [line width=3pt] (a1) +(24pt,-0.5) to [round right paren] +(24pt,0.5);
+
+  \draw[line width=3pt] (state) +(-24pt,-0.5) to [round left paren] +(-24pt,0.5);
+  \draw[line width=3pt] (db) +(24pt,-0.5) to [round right paren] +(24pt,0.5);
+
+  \draw [line width=3pt] (effargst) +(-20pt,-0.5) to [square left brace] +(-20pt,0.5);
+  \draw [line width=3pt] (effargst) +(20pt,-0.5) to [square right brace] +(20pt,0.5);
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+
+  \node[circlenode] (a1) at (3,9) {1};
+  \node[circlenode] (a2) at (3,7) {2};
+  \node[circlenode] (a3) at (1.5,9) {3};
+  \draw (5.5,6.5) node[circlenode] (a4) {4} node[effmod] {};
+  \node[circlenode] (a5) at (1.5,5.5) {5};
+  \draw (7,5) node[circlenode] (a6) {6} node[effmod] {};
+  \node[circlenode] (a7) at (4,4) {7};
+
+  %\node[circlenode] (a7) at (1,3) {7};
+  \node[circlenode] (a8) at (1,3) {8};
+
+  \draw (8.5,3.5) node[circlenode] (a9) {9} node[effmod] {};
+  \node[circlenode] (a10) at (9,1) {10};
+  \node[circlenode] (a11) at (5,2) {11};
+  \node[circlenode] (a12) at (2.5,0) {12};
+  \node[circlenode] (a13) at (6,-2) {13};
+
+  % state args
+  \draw (5.5,9) node[globalnode] (state) {};
+  \draw (7,9) node[globalnode] (log) {};
+  \draw (8.5,9) node[globalnode] (db) {};
+
+  \draw[nodeconn] (state) -- (a4);
+  \draw[nodeconn] (log)  -- (a6);
+  \draw[nodeconn] (db) -- (a9);
+
+  % eff args
+  \draw (11,9) node[effnode] (effargst) {};
+  \draw (12.5,9) node[effnode] (effarglog) {};
+  \draw (14,9) node[effnode] (effargdb) {};
+
+  % eff nodes
+  \draw
+    (13,6.5) node[effnode] (steff) {}
+    (13,5) node[effnode] (logeff) {}
+    (13,3.5) node[effnode] (dbeff) {};
+
+  \draw[effectarrow] (a4) -- (steff);
+  \draw[effectarrow] (a6) -- (logeff);
+  \draw[effectarrow] (a9) -- (dbeff);
+
+  %\draw[implicitconn]
+  %  (var) -- (state)
+  %  (a7)  -- (log)
+  %  (a11) -- (db);
+
+  \draw[nodeconn] (a1) -- (a2);
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  \draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a7);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  %\draw[nodeconn] (a6) -- (a7);
+  \draw[nodeconn] (a6) -- (a9);
+  \draw[nodeconn] (a6) -- (a13);
+
+  \draw[nodeconn] (a7) -- (a12);
+
+  \draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+  \draw[nodeconn] (a8) -- (a12);
+
+  \draw[nodeconn] (a9) -- (a10);
+  \draw[nodeconn] (a9) -- (a11);
+
+  \draw[nodeconn] (a10) -- (a13);
+
+  \draw[nodeconn] (a11) -- (a13);
+
+  \draw[nodeconn] (a12) -- (a13);
+
+  % args parens
+  \draw [line width=3pt] (a3) +(-24pt,-0.5) to [round left paren] +(-24pt,0.5);
+  \draw [line width=3pt] (a1) +(24pt,-0.5) to [round right paren] +(24pt,0.5);
+
+  \draw[line width=3pt,decorate,decoration={brace,amplitude=5pt}] (state) +(-24pt,-0.5) -- +(-24pt,0.5);
+  \draw[line width=3pt,decorate,decoration={brace,amplitude=5pt,mirror}] (db) +(24pt,-0.5) -- +(24pt,0.5);
+
+  \draw [line width=3pt] (effargst) +(-20pt,-0.5) to [square left brace] +(-20pt,0.5);
+  \draw [line width=3pt] (effargdb) +(20pt,-0.5) to [square right brace] +(20pt,0.5);
+
+  \begin{scope}[on background layer]
+    \node[funbox,fit=(a2) (a8) (a12) (a10)] (box) {};
+  \end{scope}
+
+\end{tikzpicture}
+
+\begin{tikzpicture}
+
+  \node[circlenode] (a1) at (3,9) {1};
+  \node[circlenode] (a2) at (3,7) {2};
+  \node[circlenode] (a3) at (1.5,9) {3};
+  \draw (5.5,6.5) node[circlenode] (a4) {4} node[effnode] {};
+  \node[circlenode] (a5) at (1.5,5.5) {5};
+  \draw (7,5) node[circlenode] (a6) {6} node[effnode] {};
+  \node[circlenode] (a7) at (4,4) {7};
+
+  %\node[circlenode] (a7) at (1,3) {7};
+  \node[circlenode] (a8) at (1,3) {8};
+
+  \draw (8.5,3.5) node[circlenode] (a9) {9} node[effnode] {};
+  \node[circlenode] (a10) at (9,1) {10};
+  \node[circlenode] (a11) at (5,2) {11};
+  \node[circlenode] (a12) at (2.5,0) {12};
+  \node[circlenode] (a13) at (6,-2) {13};
+
+  % state args
+  \draw (5.5,9) node[globalnode] (state) {};
+  \draw (7,9) node[globalnode] (log) {};
+  \draw (8.5,9) node[globalnode] (db) {};
+
+  \draw[nodeconn] (state) -- (a4);
+  \draw[nodeconn] (log)  -- (a6);
+  \draw[nodeconn] (db) -- (a9);
+
+  % eff args
+  \draw (11.5,9) node[effnode] (effargst) {};
+  \draw (13,9) node[effnode] (effarglog) {};
+  \draw (14.5,9) node[effnode] (effargdb) {};
+
+  \draw
+    (12,6.5) node[draw=none] (steff) {}
+    (12,5) node[draw=none] (logeff) {}
+    (12,3.5) node[draw=none] (dbeff) {};
+
+  \draw[effectarrow] (a4) -- (steff);
+  \draw[effectarrow] (a6) -- (logeff);
+  \draw[effectarrow] (a9) -- (dbeff);
+
+  %\draw[implicitconn]
+  %  (var) -- (state)
+  %  (a7)  -- (log)
+  %  (a11) -- (db);
+
+  \draw[nodeconn] (a1) -- (a2);
+  %  (a2) -- (a7)
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  \draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a7);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  %\draw[nodeconn] (a6) -- (a7);
+  \draw[nodeconn] (a6) -- (a9);
+  \draw[nodeconn] (a6) -- (a13);
+
+  \draw[nodeconn] (a7) -- (a12);
+
+  \draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+  \draw[nodeconn] (a8) -- (a12);
+
+  \draw[nodeconn] (a9) -- (a10);
+  \draw[nodeconn] (a9) -- (a11);
+
+  \draw[nodeconn] (a10) -- (a13);
+
+  \draw[nodeconn] (a11) -- (a13);
+
+  \draw[nodeconn] (a12) -- (a13);
+
+  % args parens
+  \draw [line width=3pt] (a3) +(-24pt,-0.5) to [round left paren] +(-24pt,0.5);
+  \draw [line width=3pt] (a1) +(24pt,-0.5) to [round right paren] +(24pt,0.5);
+
+  \draw[line width=3pt,decorate,decoration={brace,amplitude=5pt}] (state) +(-24pt,-0.5) -- +(-24pt,0.5);
+  \draw[line width=3pt,decorate,decoration={brace,amplitude=5pt,mirror}] (db) +(24pt,-0.5) -- +(24pt,0.5);
+
+  \draw [line width=3pt] (effargst) +(-24pt,-0.5) to [square left brace] +(-24pt,0.5);
+  \draw [line width=3pt] (effargdb) +(24pt,-0.5) to [square right brace] +(24pt,0.5);
+
+  \begin{scope}[on background layer]
+    \node[funbox,fit=(a2) (a8) (a12) (a10)] (box) {};
+  \end{scope}
+
+\end{tikzpicture}
+
+\begin{tikzpicture}
+%\draw[step=1.0,gray,ultra thin,xshift=1,yshift=1] (0,0) grid (10,10);
+
+  \node[circlenode] (a1) at (3,9) {1};
+  \node[circlenode] (a2) at (3,7) {2};
+  \node[circlenode] (a3) at (4.6,9) {3};
+  \draw (5.3,6.5) node[circlenode] (a4) {4} node[effnode] {};
+  \node[circlenode] (a5) at (1.5,5.5) {5};
+  \draw (7,5) node[circlenode] (a6) {6} node[effnode] {};
+  \node[circlenode] (a7) at (4,4) {7};
+
+  %\node[circlenode] (a7) at (1,3) {7};
+  \node[circlenode] (a8) at (1,3) {8};
+
+  \draw (8.3,3.5) node[circlenode] (a9) {9} node[effnode] {};
+  \node[circlenode] (a10) at (9,1) {10};
+  \node[circlenode] (a11) at (5,2) {11};
+  \node[circlenode] (a12) at (2.5,0) {12};
+  \node[circlenode] (a13) at (6,-2) {13};
+
+  \draw (6.2,9) node[globalnode] (state) {};
+  \draw (8,9) node[globalnode] (log) {};
+  \draw (9.8,9) node[globalnode] (db) {};
+
+  \draw[nodeconn] (state) -- (a4);
+  \draw[nodeconn] (log)  -- (a6);
+  \draw[nodeconn] (db) -- (a9);
+
+  \draw
+    (12,6.5) node[draw=none] (steff) {}
+    (12,5) node[draw=none] (logeff) {}
+    (12,3.5) node[draw=none] (dbeff) {};
+
+  \draw[effectarrow] (a4) -- (steff);
+  \draw[effectarrow] (a6) -- (logeff);
+  \draw[effectarrow] (a9) -- (dbeff);
+
+  %\draw[implicitconn]
+  %  (var) -- (state)
+  %  (a7)  -- (log)
+  %  (a11) -- (db);
+
+  \draw[nodeconn] (a1) -- (a2);
+  %  (a2) -- (a7)
+  \draw[nodeconn] (a2) -- (a5);
+  \draw[nodeconn] (a2) -- (a7);
+  \draw[nodeconn] (a2) -- (a4);
+
+  \draw[nodeconn] (a3) -- (a2);
+
+  \draw[nodeconn] (a4) -- (a6);
+  \draw[nodeconn] (a4) -- (a7);
+
+  \draw[nodeconn] (a5) -- (a6);
+  \draw[nodeconn] (a5) -- (a7);
+  \draw[nodeconn] (a5) -- (a8);
+
+  %\draw[nodeconn] (a6) -- (a7);
+  \draw[nodeconn] (a6) -- (a9);
+  \draw[nodeconn] (a6) -- (a13);
+
+  \draw[nodeconn] (a7) -- (a12);
+
+  \draw[nodeconn] (a8) -- (a9);
+  \draw[nodeconn] (a8) -- (a11);
+  \draw[nodeconn] (a8) -- (a12);
+
+  \draw[nodeconn] (a9) -- (a10);
+  \draw[nodeconn] (a9) -- (a11);
+
+  \draw[nodeconn] (a10) -- (a13);
+
+  \draw[nodeconn] (a11) -- (a13);
+
+  \draw[nodeconn] (a12) -- (a13);
+
+  \begin{scope}[on background layer]
+    \node[behind path,funbox,fit=(a2) (a8) (a12) (a10)] {};
+  \end{scope}
+
+\end{tikzpicture}
+
+\end{document}
